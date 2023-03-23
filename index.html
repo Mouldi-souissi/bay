@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles.css" />
+    <title>Plan</title>
+  </head>
+  <body>
+    <div class="container">
+      <svg width="800px" height="500px" id="svg"></svg>
+    </div>
+    <script defer>
+      // vars
+      const bayLength = 8;
+      const maxStacking = 6;
+      const minStacking = 1;
+      const size = 60;
+      const svgns = "http://www.w3.org/2000/svg";
+
+      // helpers
+      const drawGrid = (grid) => {
+        for (let x in grid) {
+          const cols = grid[x];
+          for (let y of cols) {
+            let rect = document.createElementNS(svgns, "rect");
+            rect.setAttributeNS(null, "x", x * size);
+            rect.setAttributeNS(null, "y", y * size);
+            rect.setAttributeNS(null, "width", "50");
+            rect.setAttributeNS(null, "height", "50");
+            rect.setAttributeNS(null, "fill", "tomato");
+            rect.setAttributeNS(null, "stroke", "rgb(0,0,0)");
+
+            document.getElementById("svg").appendChild(rect);
+          }
+        }
+      };
+
+      const generateGrid = (bayLength, max, min) => {
+        let limX = bayLength - (max - min);
+        let grid = {};
+
+        // block part
+        console.log(limX);
+        for (let i = 0; i < limX; i++) {
+          let row = [];
+          for (let j = 0; j < max; j++) {
+            row.push(j + 1);
+          }
+          grid[limX - i] = row;
+        }
+
+        // stairs part
+        let limY = maxStacking;
+        for (let i = limX + 1; i <= bayLength; i++) {
+          limY--;
+          let row = [];
+          for (let j = 0; j < limY; j++) {
+            row.push(j + 1);
+          }
+          grid[i] = row;
+        }
+
+        return grid;
+      };
+
+      // exec
+      const grid = generateGrid(bayLength, maxStacking, minStacking);
+      console.log("grid", grid);
+      drawGrid(grid);
+    </script>
+  </body>
+</html>
