@@ -22,8 +22,7 @@
       // helpers
       const drawGrid = (grid) => {
         for (let x in grid) {
-          const cols = grid[x];
-          for (let y of cols) {
+          for (let y = grid[x]; y > 0; y--) {
             let rect = document.createElementNS(svgns, "rect");
             rect.setAttributeNS(null, "x", x * size);
             rect.setAttributeNS(null, "y", y * size);
@@ -40,26 +39,18 @@
       const generateGrid = (bayLength, max, min) => {
         let limX = bayLength - (max - min);
         let grid = {};
+        let limY = maxStacking;
 
         // block part
-        console.log(limX);
-        for (let i = 0; i < limX; i++) {
+        for (let x = 0; x < limX; x++) {
           let row = [];
-          for (let j = 0; j < max; j++) {
-            row.push(j + 1);
-          }
-          grid[limX - i] = row;
+          grid[limX - x] = maxStacking;
         }
 
         // stairs part
-        let limY = maxStacking;
-        for (let i = limX + 1; i <= bayLength; i++) {
+        for (let x = limX + 1; x <= bayLength; x++) {
           limY--;
-          let row = [];
-          for (let j = 0; j < limY; j++) {
-            row.push(j + 1);
-          }
-          grid[i] = row;
+          grid[x] = limY;
         }
 
         return grid;
