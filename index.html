@@ -13,7 +13,7 @@
     </div>
     <script defer>
       // vars
-      const bayLength = 8;
+      const bayLength = 10;
       const maxStacking = 6;
       const minStacking = 1;
       const size = 60;
@@ -22,10 +22,10 @@
       // helpers
       const drawGrid = (grid) => {
         for (let x in grid) {
-          for (let y = grid[x]; y > 0; y--) {
+          for (let y = 0; y < grid[x]; y++) {
             let rect = document.createElementNS(svgns, "rect");
             rect.setAttributeNS(null, "x", x * size);
-            rect.setAttributeNS(null, "y", y * size);
+            rect.setAttributeNS(null, "y", Math.abs(maxStacking - y) * size);
             rect.setAttributeNS(null, "width", "50");
             rect.setAttributeNS(null, "height", "50");
             rect.setAttributeNS(null, "fill", "tomato");
