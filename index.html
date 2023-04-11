@@ -9,15 +9,68 @@
   </head>
   <body>
     <div class="container">
-      <svg width="800px" height="500px" id="svg"></svg>
+      <svg width="100%" height="auto" id="svg" viewBox="0 0 800 500"></svg>
     </div>
+    <button id="in">zoom in</button>
+    <button id="out">zoom out</button>
+    <button id="left">left</button>
+    <button id="right">right</button>
+    <button id="up">up</button>
+    <button id="down">down</button>
     <script defer>
       // vars
+      let width = 800;
+      let height = 500;
+      let x = 0;
+      let y = 0;
+      const step = 50;
       const bayLength = 10;
       const maxStacking = 6;
       const minStacking = 1;
       const size = 60;
       const svgns = "http://www.w3.org/2000/svg";
+      const svgEl = document.getElementById("svg");
+      const inEl = document.getElementById("in");
+      const outEl = document.getElementById("out");
+      const left = document.getElementById("left");
+      const right = document.getElementById("right");
+      const up = document.getElementById("up");
+      const down = document.getElementById("down");
+
+      inEl.addEventListener("click", () => {
+        // x = x + step;
+        // y = y + step;
+        width = width - step;
+
+        svgEl.setAttribute("viewBox", `${x} ${y} ${width} ${height}`);
+      });
+
+      outEl.addEventListener("click", () => {
+        width = width + step;
+
+        svgEl.setAttribute("viewBox", `${x} ${y} ${width} ${height}`);
+      });
+
+      left.addEventListener("click", () => {
+        x = x + step;
+
+        svgEl.setAttribute("viewBox", `${x} ${y} ${width} ${height}`);
+      });
+      right.addEventListener("click", () => {
+        x = x - step;
+
+        svgEl.setAttribute("viewBox", `${x} ${y} ${width} ${height}`);
+      });
+      up.addEventListener("click", () => {
+        y = y - step;
+
+        svgEl.setAttribute("viewBox", `${x} ${y} ${width} ${height}`);
+      });
+      down.addEventListener("click", () => {
+        y = y + step;
+
+        svgEl.setAttribute("viewBox", `${x} ${y} ${width} ${height}`);
+      });
 
       // helpers
       const drawGrid = (grid) => {
@@ -31,7 +84,7 @@
             rect.setAttributeNS(null, "fill", "tomato");
             rect.setAttributeNS(null, "stroke", "rgb(0,0,0)");
 
-            document.getElementById("svg").appendChild(rect);
+            svgEl.appendChild(rect);
           }
         }
       };

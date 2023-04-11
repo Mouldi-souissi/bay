@@ -5,6 +5,8 @@
 }
 
 .container {
-  min-height: 500px;
-  min-width: 800px;
+  max-height: 500px;
+  max-width: 800px;
+  border: 1px dashed black;
+  overflow: hidden;
 }
